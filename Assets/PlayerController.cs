@@ -8,9 +8,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int movementSpeed;
     [SerializeField] Rigidbody2D playerRigidBody;
     private Vector2 movementInput;
+
+    [SerializeField] Transform WeaponsArm;
+
+    private Camera mainCamera;
     void Start()
     {
-        
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -19,9 +23,16 @@ public class PlayerController : MonoBehaviour
         movementInput.x = Input.GetAxisRaw("Horizontal");
         movementInput.y = Input.GetAxisRaw("Vertical");
 
-        //transform.position += new Vector3(movementInput.x, movementInput.y, 0f)* movementSpeed * Time.deltaTime;
-
         playerRigidBody.velocity = movementInput * movementSpeed;
+
+        Vector3 mousePosition = Input.mousePosition;
+        Vector3 screenPoint = mainCamera.WorldToScreenPoint(transform.localPosition);
+
+        Vector2 offset = new Vector2(mousePosition.x - screenPoint.x, mousePosition.y - screenPoint.y);
+
+        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
+
+        WeaponsArm.rotation = Quaternion.Euler(0, 0, angle);
 
     }
 }
