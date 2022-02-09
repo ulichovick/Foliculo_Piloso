@@ -258,6 +258,7 @@ MonoBehaviour:
   movementSpeed: 3
   playerRigidBody: {fileID: 777764515}
   WeaponsArm: {fileID: 1613517334}
+  Player: {fileID: 777764513}
 --- !u!50 &777764515
 Rigidbody2D:
   serializedVersion: 4
@@ -292,8 +293,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.020478845, y: -0.97272086}
-  m_Size: {x: 1.18431, y: 0.4061311}
+  m_Offset: {x: -0.03338957, y: -0.97272086}
+  m_Size: {x: 1.2101318, y: 0.4061311}
   m_Direction: 1
 --- !u!1 &895968628
 GameObject:
