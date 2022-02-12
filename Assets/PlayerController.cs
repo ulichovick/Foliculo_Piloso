@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         {
             playerAnimator.SetBool("isWalking", false);
         }
-
+        Debug.Log(timeSinceAction);
         if (movementInput != Vector2.zero && torpedo == 1)
         {
             if (timeSinceAction < actionCooldown)
@@ -74,9 +74,9 @@ public class PlayerController : MonoBehaviour
                 playerRigidBody.AddForce(new Vector3(movementInput.x, 0, 0) * boost, ForceMode2D.Impulse);
                 playerAnimator.SetBool("isFlipping", true);
                 timeSinceAction += Time.deltaTime;
+                canPress = false;
                 if(timeSinceAction > actionCooldown)
                 {
-                    canPress = true;
                     timeSinceAction = actionCooldown;
                 }
             }
