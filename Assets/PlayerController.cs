@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 movementInput;
     public float boost = 10f;
     public float actionCooldown = 0.35f;
-    private int maxTorpedos = 1;
+    bool canPress = true;
 
     float timeSinceAction = 0.0f;
     //[SerializeField] Transform WeaponsArm;
@@ -30,7 +30,11 @@ public class PlayerController : MonoBehaviour
     {
         movementInput.x = Input.GetAxisRaw("Horizontal");
         movementInput.y = Input.GetAxisRaw("Vertical");
-        torpedo = Input.GetAxisRaw("Fire2");
+        if (canPress)
+        {
+            torpedo = Input.GetAxisRaw("Fire2");
+            StartCoroutine(CoolDown());
+        }
         movementInput.Normalize();
 
         playerRigidBody.velocity = movementInput * movementSpeed;
@@ -55,9 +59,7 @@ public class PlayerController : MonoBehaviour
             Player.localScale = Vector3.one;
             //WeaponsArm.localScale = new Vector3(1f, 1f, 0);
             //WeaponsArm.localScale = Vector3.one;
-
         }
-
 
         if (movementInput != Vector2.zero)
         {
@@ -68,9 +70,7 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("isWalking", false);
         }
 
-        Debug.Log(timeSinceAction);
-
-        if (movementInput != Vector2.zero & torpedo == 1)
+        if (movementInput != Vector2.zero && torpedo == 1)
         {
             if (timeSinceAction < actionCooldown)
             {
@@ -101,8 +101,12 @@ public class PlayerController : MonoBehaviour
                 }
             }
             playerAnimator.SetBool("isFlipping", false);
-
         }
-
+    }
+    private IEnumerator CoolDown()
+    {
+        canPress = false;
+        yield return new WaitForSeconds(0.5f);
+        canPress = true;
     }
 }
