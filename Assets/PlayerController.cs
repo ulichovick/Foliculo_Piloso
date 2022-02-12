@@ -8,20 +8,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Rigidbody2D playerRigidBody;
     private Vector2 movementInput;
     public float boost = 10f;
-    public float actionCooldown = 0.35f;
+    public float actionCooldown = 0.31f;
     bool canPress = true;
-
     float timeSinceAction = 0.0f;
     //[SerializeField] Transform WeaponsArm;
     [SerializeField] Transform Player;
-    private Camera mainCamera;
+    //private Camera mainCamera;
     private float torpedo;
     private Animator playerAnimator;
     // Start is called before the first frame update
     void Start()
     {
-        mainCamera = Camera.main;
-
+        //mainCamera = Camera.main;
         playerAnimator = GetComponent<Animator>();
     }
 
@@ -36,16 +34,12 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(CoolDown());
         }
         movementInput.Normalize();
-
         playerRigidBody.velocity = movementInput * movementSpeed;
 
-        Vector3 mousePosition = Input.mousePosition;
-        Vector3 screenPoint = mainCamera.WorldToScreenPoint(Player.localPosition);
-
-        Vector2 offset = new Vector2(mousePosition.x - screenPoint.x, mousePosition.y - screenPoint.y);
-
-        float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
-
+        //Vector3 mousePosition = Input.mousePosition;
+        //Vector3 screenPoint = mainCamera.WorldToScreenPoint(Player.localPosition);
+        //Vector2 offset = new Vector2(mousePosition.x - screenPoint.x, mousePosition.y - screenPoint.y);
+        //float angle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
         //WeaponsArm.rotation = Quaternion.Euler(0, 0, angle);
 
         if (movementInput.x < 0)
@@ -82,6 +76,7 @@ public class PlayerController : MonoBehaviour
                 timeSinceAction += Time.deltaTime;
                 if(timeSinceAction > actionCooldown)
                 {
+                    canPress = true;
                     timeSinceAction = actionCooldown;
                 }
             }
@@ -106,7 +101,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator CoolDown()
     {
         canPress = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.32f);
         canPress = true;
     }
 }
