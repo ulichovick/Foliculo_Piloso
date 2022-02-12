@@ -7,6 +7,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int movementSpeed;
     [SerializeField] Rigidbody2D playerRigidBody;
     private Vector2 movementInput;
+    public float boost = 10f;
+    public float actionCooldown = 0.35f;
+    private int maxTorpedos = 1;
+
+    float timeSinceAction = 0.0f;
     //[SerializeField] Transform WeaponsArm;
     [SerializeField] Transform Player;
     private Camera mainCamera;
@@ -26,6 +31,7 @@ public class PlayerController : MonoBehaviour
         movementInput.x = Input.GetAxisRaw("Horizontal");
         movementInput.y = Input.GetAxisRaw("Vertical");
         torpedo = Input.GetAxisRaw("Fire2");
+        movementInput.Normalize();
 
         playerRigidBody.velocity = movementInput * movementSpeed;
 
@@ -62,18 +68,38 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool("isWalking", false);
         }
 
+        Debug.Log(timeSinceAction);
 
         if (movementInput != Vector2.zero & torpedo == 1)
         {
-            //Player.position += new Vector3(torpedo, 0f, 0f);
-            //Player.position += new Vector3(torpedo*(movementSpeed*2), 0f, 0f);
-            playerRigidBody.velocity = new Vector2(torpedo * movementInput.x, 0) * (movementSpeed * 3);
-            Debug.Log(playerRigidBody.velocity);
-            playerAnimator.SetBool("isFlipping", true);
-
+            if (timeSinceAction < actionCooldown)
+            {
+                //Player.position += new Vector3(torpedo, 0f, 0f);
+                //Player.position += new Vector3(torpedo*(movementSpeed*2), 0f, 0f);
+                //playerRigidBody.velocity = new Vector2(movementInput.x, 0) * (movementSpeed * 3);
+                playerRigidBody.AddForce(new Vector3(movementInput.x, 0, 0) * boost, ForceMode2D.Impulse);
+                playerAnimator.SetBool("isFlipping", true);
+                timeSinceAction += Time.deltaTime;
+                if(timeSinceAction > actionCooldown)
+                {
+                    timeSinceAction = actionCooldown;
+                }
+            }
+            else
+            {
+                playerAnimator.SetBool("isFlipping", false);
+            }
         }
         else
         {
+            if(timeSinceAction > 0)
+            {
+                timeSinceAction -= Time.deltaTime;
+                if(timeSinceAction < 0)
+                {
+                    timeSinceAction = 0;
+                }
+            }
             playerAnimator.SetBool("isFlipping", false);
 
         }
