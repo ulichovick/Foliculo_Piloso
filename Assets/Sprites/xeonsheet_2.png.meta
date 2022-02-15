@@ -133,16 +133,16 @@ TextureImporter:
     second: xeonsheet_2_42
   - first:
       213: -3892183631570330983
-    second: xeonsheet_2_43
+    second: firing_1
   - first:
       213: -726974435510371193
-    second: xeonsheet_2_44
+    second: firing_2
   - first:
       213: -4615800265310378048
-    second: xeonsheet_2_45
+    second: firing_3
   - first:
       213: 7199949544854892286
-    second: xeonsheet_2_46
+    second: firing_4
   - first:
       213: -5550733461127257097
     second: xeonsheet_2_47
@@ -1213,7 +1213,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: xeonsheet_2_43
+      name: firing_1
       rect:
         serializedVersion: 2
         x: 7
@@ -1234,7 +1234,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: xeonsheet_2_44
+      name: firing_2
       rect:
         serializedVersion: 2
         x: 57
@@ -1255,7 +1255,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: xeonsheet_2_45
+      name: firing_3
       rect:
         serializedVersion: 2
         x: 113
@@ -1276,7 +1276,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: xeonsheet_2_46
+      name: firing_4
       rect:
         serializedVersion: 2
         x: 175
