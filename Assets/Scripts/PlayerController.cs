@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] int movementSpeed;
     [SerializeField] Rigidbody2D playerRigidBody;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform firePoint;
     private Vector2 movementInput;
     public float boost = 10f;
     public float actionCooldown = 0.31f;
@@ -44,13 +46,15 @@ public class PlayerController : MonoBehaviour
 
         if (movementInput.x < 0)
         {
-            Player.localScale = new Vector3(-1f, 1f, 1f);
+            //Player.localScale = new Vector3(-1f, 1f, 1f);
+            Player.rotation = Quaternion.Euler(0, 180, 0);
             //WeaponsArm.localScale = new Vector3(-1f, -1f, 1f);
         }
         else if (movementInput.x > 0)
         {
             //Player.localScale = new Vector3(1f, 1f, 0);
-            Player.localScale = Vector3.one;
+            //Player.localScale = Vector3.one;
+            Player.rotation = Quaternion.Euler(0, 0, 0);
             //WeaponsArm.localScale = new Vector3(1f, 1f, 0);
             //WeaponsArm.localScale = Vector3.one;
         }
@@ -96,6 +100,10 @@ public class PlayerController : MonoBehaviour
                 }
             }
             playerAnimator.SetBool("isFlipping", false);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(bullet,firePoint.position,firePoint.rotation);
         }
     }
     private IEnumerator CoolDown()
