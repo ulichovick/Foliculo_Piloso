@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Transform firePoint;
     private Vector2 movementInput;
+    [SerializeField] float timeBetweenShots;
+    private float shotCounter;
     public float boost = 10f;
     public float actionCooldown = 0.31f;
     bool canPress = true;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         //mainCamera = Camera.main;
         playerAnimator = GetComponent<Animator>();
+        shotCounter = 0;
     }
 
     // Update is called once per frame
@@ -101,9 +104,20 @@ public class PlayerController : MonoBehaviour
             }
             playerAnimator.SetBool("isFlipping", false);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        if (Input.GetKey(KeyCode.Space))
         {
-            Instantiate(bullet,firePoint.position,firePoint.rotation);
+            shotCounter -= Time.deltaTime;
+            if (shotCounter <= 0)
+            {
+                playerAnimator.SetBool("isFiring", true);
+                Instantiate(bullet,firePoint.position,firePoint.rotation);
+                shotCounter = timeBetweenShots;
+            }
+        }
+        else
+        {
+            playerAnimator.SetBool("isFiring", false);
         }
     }
     private IEnumerator CoolDown()

@@ -6,6 +6,7 @@ public class PlayerBulletController : MonoBehaviour
 {
     [SerializeField] float bulletSpeed = 5f;
     private Rigidbody2D bulletRigidBody;
+    [SerializeField] GameObject explosion;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,7 @@ public class PlayerBulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        Instantiate(explosion.transform,transform.position,transform.rotation);
         Destroy(gameObject);
     }
 }
